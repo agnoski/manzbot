@@ -25,16 +25,25 @@ class WebTerminal extends Page {
     orderSLInput { $("input#order-ie-dialog-sl") }
     orderSellButton { $("button.input-button").find { it.displayed && it.text() == "Sell" } }
     orderBuyButton { $("button.input-button").find { it.displayed && it.text() == "Buy" } }
-    orderOkButton { $("button.input-button").find { it.displayed && it.text() == "OK" } }
+    orderOkButton { $("button.input-button", text: "OK").find { it.displayed } }
     orderAcceptButton { $("button.input-button").find { it.displayed && it.text() == "Accept" } }
     orderRejectButton { $("button.input-button").find { it.displayed && it.text() == "Reject" } }
-    orderCloseButton { $("div.page-window div.w div.wx").find { it.displayed } }
+    orderCloseButton { $("div.page-window.modal div.w div.wx span.i").find { it.displayed } }
     orderValues { $("div.page-block div.page-block div.page-text span") }
 
     menuFile { $("div.page-menu div.menu div.first")[0].find(text: "File") }
     loginToTradeAccount { $("span.label", text: "Login to Trade Account") }
     loginInput { $("input#login") }
     passwordInput { $("input#password") }
+  }
+
+  def getButton(text) {
+    def button = $("button.input-button", text: text)
+    if(button) {
+      return button.find { it.displayed }
+    } else {
+      return null
+    }
   }
 
   def getBuyPriceTP(delta) {
