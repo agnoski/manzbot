@@ -20,7 +20,6 @@ class BrowserBot extends Thread {
           if(cookiesBanner.displayed) { 
             closeCookiesBanner.click()
           }
-
         }
     }
 
@@ -28,6 +27,7 @@ class BrowserBot extends Thread {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
                 waitFor(30) { buyButton.displayed }
+                login()
                 symbolsButton.click()
                 forex.click()
                 hideSelectedSymbol.click()

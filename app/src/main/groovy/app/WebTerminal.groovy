@@ -31,6 +31,10 @@ class WebTerminal extends Page {
     orderCloseButton { $("div.page-window div.w div.wx").find { it.displayed } }
     orderValues { $("div.page-block div.page-block div.page-text span") }
 
+    menuFile { $("div.page-menu div.menu div.first")[0].find(text: "File") }
+    loginToTradeAccount { $("span.label", text: "Login to Trade Account") }
+    loginInput { $("input#login") }
+    passwordInput { $("input#password") }
   }
 
   def getBuyPriceTP(delta) {
@@ -43,6 +47,24 @@ class WebTerminal extends Page {
     def price = getSellPrice() as BigDecimal
     println("Sell price: $price")
     return price - delta
+  }
+
+  void login() {
+    menuFile.click()
+    waitFor(5) { loginToTradeAccount.displayed }
+    loginToTradeAccount.click()
+    loginToTradeAccount.click()
+    println("Clicked login to trade account")
+    sleep(3000)
+
+    waitFor(5) { loginInput.displayed  }
+    loginInput.click()
+    loginInput.value("38236061")
+    passwordInput.click()
+    passwordInput.value("jvmbnbc4")
+    orderOkButton.click()
+    sleep(5000)
+
   }
 
   private def getBuyPrice() {
