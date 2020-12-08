@@ -1,0 +1,16 @@
+{
+  "indexes": [
+    {
+      "index": {
+        "id": "1",
+        "code":"EURUSD"
+      },
+      "parameters": {
+        "volumeQuantity": 0.01,
+        "tpDelta": 0.00060
+      },
+      "timeCollection": [60, 300, 900],
+      "timePeriod": 300
+    }
+  ]
+}
