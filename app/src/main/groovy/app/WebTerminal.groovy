@@ -96,9 +96,8 @@ class WebTerminal extends Page {
     loginInput.value("38236061")
     passwordInput.click()
     passwordInput.value("jvmbnbc4")
-    orderOkButton.click()
-    sleep(5000)
-
+    clickButton("OK")
+    sleep(3000)
   }
 
   private def getBuyPrice() {
