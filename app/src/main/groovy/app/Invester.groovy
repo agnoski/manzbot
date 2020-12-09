@@ -10,13 +10,13 @@ class Invester implements Runnable {
 
   private def index
   private def timeCollection
-  private def timeInterval
+  private def timePeriod
   private def parameters
 
-  public Invester(index, timeCollection, timeInterval, parameters) {
+  public Invester(index, timeCollection, timePeriod, parameters) {
     this.index = index
     this.timeCollection = timeCollection
-    this.timeInterval = timeInterval
+    this.timePeriod = timePeriod
     this.parameters = parameters
   }
 

@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit
 
 class InvestersManager {
   private final int threadDelay = 60
-  private final int threadPeriod = 300
   private String configFilePath = "/home/agno/Dev/gradleTest/app/app/src/main/groovy/app/config.json"
 
   public InvestersManager() {
@@ -24,7 +23,7 @@ class InvestersManager {
 
     // launch threads
     investers.eachWithIndex { invester, index ->
-      scheduledThreadPool.scheduleAtFixedRate(invester, (index + 2) * threadDelay, threadPeriod, TimeUnit.SECONDS)
+      scheduledThreadPool.scheduleAtFixedRate(invester, index * threadDelay, invester.timePeriod, TimeUnit.SECONDS)
     }
   }
 }

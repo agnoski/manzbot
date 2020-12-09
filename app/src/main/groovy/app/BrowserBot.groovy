@@ -17,10 +17,11 @@ class BrowserBot extends Thread {
         return Browser.drive(this.browser) {
           to MetaTrader 
 
-          waitFor(20) { webTerminalIframe.displayed }
-          if(cookiesBanner.displayed) { 
-            closeCookiesBanner.click()
+          waitFor(20) {
+            webTerminalIframe.displayed
           }
+
+          closeCookiesBannerIfPresent()
         }
     }
 
@@ -28,21 +29,28 @@ class BrowserBot extends Thread {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
                 waitFor(30) { buyButton.displayed }
+                //TODO move out login
                 login()
                 symbolsButton.click()
-                forex.click()
-                hideSelectedSymbol.click()
-                crypto.click()
-                showSelectedSymbol.click()
-                closeSymbols.click()
+                clickIndexCategory("Forex")
+                clickButton("Hide")
+                clickIndexCategory("Crypto")
+                clickButton("Show")
+                clickButton("Close")
             }
         }
+    }
+
+    private def isActionValid(action) {
+      return action.action in [Action.Type.SELL, Action.Type.BUY]
     }
 
     def placeOrder(action) {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
-                if(action.action == Action.Type.SELL || action.action == Action.Type.BUY) {
+                if(isActionValid(action)) {
+                    closeWindow()
+                    def indexRow = getIndexRow(action.index.code)
                     waitFor(5) { indexRow.displayed }
                     indexRow.click()
                     newOrderButton.click()
@@ -50,29 +58,37 @@ class BrowserBot extends Thread {
                     try {
                       orderVolumeInput.click()
                       orderVolumeInput << (action.parameters.volumeQuantity as String)
-                      if(action.action == Action.Type.BUY) {
-                        def priceTP = getBuyPriceTP(action.parameters.tpDelta) as String
-                        orderTPInput.click()
-                        orderTPInput << priceTP
-                        orderBuyButton.click()
-                      } else {
-                        def priceTP = getSellPriceTP(action.parameters.tpDelta) as String
-                        orderTPInput.click()
-                        orderTPInput << priceTP
-                        orderSellButton.click()
+                      switch(action.action) {
+                        case Action.Type.BUY:
+                          def priceTP = getBuyPriceTP(action.parameters.tpDelta) as String
+                          orderTPInput.click()
+                          orderTPInput << priceTP
+                          clickButton("Buy")
+                          break
+                        case Action.Type.SELL:
+                          def priceTP = getSellPriceTP(action.parameters.tpDelta) as String
+                          orderTPInput.click()
+                          orderTPInput << priceTP
+                          clickButton("Sell")
+                          break
+                        default:
+                          println("Action ${action.action}: nothing to do")
                       }
-                      println("Well done: ${Instant.now()}")
-                      sleep(2000)
+                      def time = Instant.now()
                       def okButton = getButton("OK")
                       if(okButton) {
                         okButton.click()
+                        println("Well done: $time")
                       } else {
-                        println("Trying to close window")
-                        orderCloseButton.click()
+                        println("Something has changed")
+                        closeWindow()
                       }
                     } catch(Exception e) {
                         println("Something went terribly wrong, closing the order window")
-                        orderCloseButton.click()
+                        closeWindow()
+                    } finally {
+                        println("Finally")
+                        closeWindow()
                     }
                 }
             }

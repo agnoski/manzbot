@@ -12,23 +12,10 @@ class WebTerminal extends Page {
 
     symbolsButton { $("a.at-symbols-button") }
     newOrderButton { $("a.at-new-order-button") }
-    forex { $("span.label").find { it.text() == "Forex" } }
-    crypto { $("span.label").find { it.text() == "Crypto" } }
-    showSelectedSymbol { $("button.input-button").find { it.displayed && it.text() == "Show" } }
-    hideSelectedSymbol { $("button.input-button").find { it.displayed && it.text() == "Hide" } }
-    closeSymbols { $("button.input-button").find { it.displayed && it.text() == "Close" } }
-
-    indexRow { $("tr#EURUSD td#symbol") }
 
     orderVolumeInput { $("input#order-ie-dialog-volume") }
     orderTPInput { $("input#order-ie-dialog-tp") }
     orderSLInput { $("input#order-ie-dialog-sl") }
-    orderSellButton { $("button.input-button").find { it.displayed && it.text() == "Sell" } }
-    orderBuyButton { $("button.input-button").find { it.displayed && it.text() == "Buy" } }
-    orderOkButton { $("button.input-button", text: "OK").find { it.displayed } }
-    orderAcceptButton { $("button.input-button").find { it.displayed && it.text() == "Accept" } }
-    orderRejectButton { $("button.input-button").find { it.displayed && it.text() == "Reject" } }
-    orderCloseButton { $("div.page-window.modal div.w div.wx span.i").find { it.displayed } }
     orderValues { $("div.page-block div.page-block div.page-text span") }
 
     menuFile { $("div.page-menu div.menu div.first")[0].find(text: "File") }
@@ -46,6 +33,39 @@ class WebTerminal extends Page {
     }
   }
 
+  def getWindowCloseButton() {
+    def button = $("div.page-window.modal div.w div.wx span.i")
+    if(button) {
+      return button.find { it.displayed }
+    } else {
+      return null
+    }
+  }
+
+  void closeWindow() {
+    def windowCloseButton = getWindowCloseButton()
+    if(windowCloseButton) {
+      windowCloseButton.click()
+      println("Tried to close window")
+    } else {
+      println("No widows to close")
+    }
+  }
+
+  void clickButton(text) {
+    def button = getButton(text)
+    if(button) {
+      button.click()
+    }
+    else {
+      println("Button $text not found")
+    }
+  }
+  
+  def getIndexRow(index) { 
+    return $("tr#$index td#symbol")
+  }
+
   def getBuyPriceTP(delta) {
     def price = getBuyPrice() as BigDecimal
     println("Buy price: $price")
@@ -56,6 +76,11 @@ class WebTerminal extends Page {
     def price = getSellPrice() as BigDecimal
     println("Sell price: $price")
     return price - delta
+  }
+
+  void clickIndexCategory(indexCategoryName) {
+    def indexCategory = $("span.label", text: indexCategoryName)
+    indexCategory.click()
   }
 
   void login() {
