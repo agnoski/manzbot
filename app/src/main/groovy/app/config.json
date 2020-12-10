@@ -1,4 +1,11 @@
 {
+  "login": {
+    "user": "username",
+    "password": "secretpassword"
+  },
+  "webdriver": {
+    "path": "webdriverpath"
+  },
   "indexes": [
     {
       "index": {
