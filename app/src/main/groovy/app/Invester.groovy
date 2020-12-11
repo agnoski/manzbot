@@ -5,26 +5,26 @@ import java.time.Instant
 
 class Invester implements Runnable {
   private final def urlTemplate = 'https://ssltsw.forexprostools.com/api.php?action=refresher&pairs=${code}&timeframe=${timeFrame}'
-  private final def buyStrings = ["Strong Buy", "Buy"]
-  private final def sellStrings = ["Strong Sell", "Sell"]
 
-  private def index
-  private def timeCollection
+  private def asset
+  private def timeFrames
   private def timePeriod
   private def parameters
+  private def indicators
 
-  public Invester(index, timeCollection, timePeriod, parameters) {
-    this.index = index
-    this.timeCollection = timeCollection
-    this.timePeriod = timePeriod
+  public Invester(asset, technicalSettings, parameters, timePeriod) {
+    this.asset = asset
+    this.timeFrames = technicalSettings.timeFrames
+    this.indicators = technicalSettings.indicators
     this.parameters = parameters
+    this.timePeriod = timePeriod
   }
 
   @Override
   public void run() {
     def buy = this.doRequest()
     def action = [
-      index: this.index,
+      index: this.asset,
       action: buy,
       parameters: this.parameters,
       time: Instant.now()
@@ -40,16 +40,16 @@ class Invester implements Runnable {
   }
 
   private def getData() {
-    return this.timeCollection.collect { time ->
+    return this.timeFrames.collect { time ->
       def url = this.getUrl(time)
       def response = this.getResponse(url)
-      def technicalSummary = response[this.index.id]["technicalSummary"]
+      def technicalSummary = response[this.asset.id]["technicalSummary"]
       return technicalSummary
     }
   }
 
   private String getUrl(time) {
-      def binding = ["code":this.index.id, "timeFrame":time]
+      def binding = ["code": this.asset.id, "timeFrame": time]
       def engine = new groovy.text.SimpleTemplateEngine()
       return engine.createTemplate(urlTemplate).make(binding).toString()
   }
@@ -61,8 +61,8 @@ class Invester implements Runnable {
   }
 
   private def shouldIBuy(results) {
-    def buy = results.every { it in this.buyStrings }
-    def sell = results.every { it in this.sellStrings }
+    def buy = results.every { it in this.indicators.buy }
+    def sell = results.every { it in this.indicators.sell }
 
     if (buy) {
       return Action.Type.BUY

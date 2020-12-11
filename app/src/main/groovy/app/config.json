@@ -6,9 +6,9 @@
   "webdriver": {
     "path": "webdriverpath"
   },
-  "indexes": [
+  "assets": [
     {
-      "index": {
+      "asset": {
         "id": "1",
         "code":"EURUSD"
       },
@@ -16,7 +16,13 @@
         "volumeQuantity": 0.01,
         "tpDelta": 0.00060
       },
-      "timeCollection": [60, 300, 900],
+      "technicalSettings": {
+        "timeFrames": [60, 300, 900],
+        "indicators": {
+          "buy": ["Buy", "Strong Buy"],
+          "sell": ["Sell", "Strong Sell"]
+        } 
+      },
       "timePeriod": 300
     }
   ]
