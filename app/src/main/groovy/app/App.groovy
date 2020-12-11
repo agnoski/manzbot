@@ -1,17 +1,26 @@
 package app
 
 class App {
-    String getGreeting() {
-        return 'Hello World!'
-    }
 
-    static void main(String[] args) {
-        println new App().greeting
+  static void main(String[] args) {
+    println("Hello world Manzbot!")
 
-        System.setProperty("webdriver.gecko.driver", "/home/agno/Scaricati/geckodriver28");
-        def browserBot = new BrowserBot()
-        browserBot.start()
-        def investersManager = new InvestersManager()
-        println("Dirty job done...")
-    }
+    // load config
+    def configManager = new ConfigManager()
+
+    // init webdriver
+    def webdriverConfig = configManager.webdriver
+    System.setProperty("webdriver.gecko.driver", webdriver.path);
+    
+    // init browserBot
+    def browserBotConfig = configManager.tradePlatform
+    def browserBot = new BrowserBot(tradePlatform)
+    browserBot.start()
+
+    // init investers
+    def assetsConfig = configManager.assets
+    def investersManager = new InvestersManager(assetsConfig)
+
+    println("Dirty job done...")
+  }
 }
