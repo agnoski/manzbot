@@ -83,19 +83,18 @@ class WebTerminal extends Page {
     indexCategory.click()
   }
 
-  void login() {
+  void login(credentials) {
     menuFile.click()
     waitFor(5) { loginToTradeAccount.displayed }
     loginToTradeAccount.click()
     loginToTradeAccount.click()
-    println("Clicked login to trade account")
     sleep(3000)
 
     waitFor(5) { loginInput.displayed  }
     loginInput.click()
-    loginInput.value("38236061")
+    loginInput.value(credentials.user)
     passwordInput.click()
-    passwordInput.value("jvmbnbc4")
+    passwordInput.value(credentials.password)
     clickButton("OK")
     sleep(3000)
   }

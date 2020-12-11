@@ -3,9 +3,9 @@
     "path": "/home/agno/Scaricati/geckodriver28"
   },
   "tradePlatform": {
-    "login": {
-      "user": "username",
-      "password": "secretpassword"
+    "credentials": {
+      "user": "38236061",
+      "password": "jvmbnbc4"
     }
   },
   "assets": [

@@ -7,10 +7,10 @@ import java.time.Instant
 class BrowserBot extends Thread {
     private def browser
 
-    BrowserBot() {
+    BrowserBot(config) {
         this.browser = new Browser()
         this.browser = this.openWebTerminal()
-        this.browser = this.setupIndexes()
+        this.browser = this.setupIndexes(config.credentials)
     }
 
     private def openWebTerminal() {
@@ -25,12 +25,12 @@ class BrowserBot extends Thread {
         }
     }
 
-    private def setupIndexes() {
+    private def setupIndexes(credentials) {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
                 waitFor(30) { buyButton.displayed }
                 //TODO move out login
-                login()
+                login(credentials)
                 symbolsButton.click()
                 clickIndexCategory("Forex")
                 clickButton("Hide")
