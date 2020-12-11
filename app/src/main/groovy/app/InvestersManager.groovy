@@ -12,7 +12,8 @@ class InvestersManager {
     ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(config.assets.size())
 
     // create Investers
-    def investers = config.assets.collect { Invester(it.asset, it.technicalSettings, it.parameters, it.timePeriod)
+    def investers = config.assets.collect { asset ->
+      return new Invester(asset.asset, asset.technicalSettings, asset.parameters, asset.timePeriod)
     }
 
     // launch Investers threads

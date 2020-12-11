@@ -2,16 +2,15 @@ package app
 
 import groovy.json.JsonSlurper
 
-class Config {
+class ConfigManager {
   private def path
   private def config
   
-  Config() {
-    def path = "/home/agno/Dev/gradleTest/app/app/src/main/groovy/app/config.json"
-    this(path)
+  ConfigManager() {
+    this("/home/agno/Dev/gradleTest/app/app/src/main/groovy/app/config.json")
   }
 
-  Config(path) {
+  ConfigManager(path) {
     this.path = path
     this.config = loadConfig()
   }

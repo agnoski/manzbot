@@ -7,18 +7,19 @@ class App {
 
     // load config
     def configManager = new ConfigManager()
+    def config = configManager.getConfig()
 
     // init webdriver
-    def webdriverConfig = configManager.webdriver
-    System.setProperty("webdriver.gecko.driver", webdriver.path);
+    def webdriverConfig = config.webdriver
+    System.setProperty("webdriver.gecko.driver", webdriverConfig.path);
     
     // init browserBot
-    def browserBotConfig = configManager.tradePlatform
-    def browserBot = new BrowserBot(tradePlatform)
+    def tradePlatformConfig = config.tradePlatform
+    def browserBot = new BrowserBot(tradePlatformConfig)
     browserBot.start()
 
     // init investers
-    def assetsConfig = configManager.assets
+    def assetsConfig = config.investers
     def investersManager = new InvestersManager(assetsConfig)
 
     println("Dirty job done...")
