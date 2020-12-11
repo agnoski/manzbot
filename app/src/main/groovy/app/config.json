@@ -6,6 +6,10 @@
     "credentials": {
       "user": "38236061",
       "password": "jvmbnbc4"
+    },
+    "symbols": {
+      "show": ["Crypto"],
+      "hide": ["Forex"]
     }
   },
   "investers": {
