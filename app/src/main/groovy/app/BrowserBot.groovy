@@ -10,7 +10,8 @@ class BrowserBot extends Thread {
     BrowserBot(config) {
         this.browser = new Browser()
         this.browser = this.openWebTerminal()
-        this.browser = this.setupIndexes(config.credentials)
+        this.browser = this.setupLogin(config.credentials)
+        this.browser = this.setupSymbolsCategories(config.symbols)
     }
 
     private def openWebTerminal() {
@@ -25,17 +26,27 @@ class BrowserBot extends Thread {
         }
     }
 
-    private def setupIndexes(credentials) {
+    private def setupLogin(credentials) {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
                 waitFor(30) { buyButton.displayed }
-                //TODO move out login
                 login(credentials)
+            }
+        }
+    }
+
+    private def setupSymbolsCategories(categories) {
+        return Browser.drive(this.browser) {
+            withFrame(webTerminalIframe) {
                 symbolsButton.click()
-                clickIndexCategory("Forex")
-                clickButton("Hide")
-                clickIndexCategory("Crypto")
-                clickButton("Show")
+                categories.show.forEach {
+                    clickIndexCategory(it)
+                    clickButton("Show")
+                }
+                categories.hide.forEach {
+                    clickIndexCategory(it)
+                    clickButton("Hide")
+                }
                 clickButton("Close")
             }
         }
