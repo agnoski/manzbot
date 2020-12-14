@@ -28,7 +28,25 @@
           "indicators": {
             "buy": ["Buy", "Strong Buy"],
             "sell": ["Sell", "Strong Sell"]
-          } 
+          }
+        },
+        "timePeriod": 300
+      },
+      {
+        "asset": {
+          "id": "945629",
+          "code":"BTCUSD"
+        },
+        "parameters": {
+          "volumeQuantity": 0.01,
+          "tpDelta": 70.0
+        },
+        "technicalSettings": {
+          "timeFrames": [60, 300, 900],
+          "indicators": {
+            "buy": ["Buy", "Strong Buy"],
+            "sell": ["Sell", "Strong Sell"]
+          }
         },
         "timePeriod": 300
       }
