@@ -1,6 +1,7 @@
 package app
 
 import geb.Page
+import geb.module.Select
 
 class WebTerminal extends Page {
   static content = {
@@ -62,8 +63,9 @@ class WebTerminal extends Page {
     }
   }
   
-  def getIndexRow(index) { 
-    return $("tr#$index td#symbol")
+  void selectOrderSymbol(index) {
+    def orderSymbolSelect = $("#order-dialog-symbol").module(Select)
+    orderSymbolSelect.selected = index
   }
 
   def getBuyPriceTP(delta) {

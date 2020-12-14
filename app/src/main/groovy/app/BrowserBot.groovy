@@ -50,12 +50,10 @@ class BrowserBot extends Thread {
             withFrame(webTerminalIframe) {
                 if(isActionValid(action)) {
                     closeWindow()
-                    def indexRow = getIndexRow(action.index.code)
-                    waitFor(5) { indexRow.displayed }
-                    indexRow.click()
                     newOrderButton.click()
                     waitFor(5) { orderVolumeInput.displayed }
                     try {
+                      selectOrderSymbol(action.index.code)
                       orderVolumeInput.click()
                       orderVolumeInput << (action.parameters.volumeQuantity as String)
                       switch(action.action) {
