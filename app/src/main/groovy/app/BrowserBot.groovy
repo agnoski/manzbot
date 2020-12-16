@@ -5,13 +5,27 @@ import org.openqa.selenium.Keys
 import java.time.Instant
 
 class BrowserBot extends Thread {
+    private def secondsFactor = 1000
     private def browser
+    private def maxActionDeltaTime
+    private def actionValidFunctions = [
+        { action -> action.action in [Action.Type.SELL, Action.Type.BUY] },
+        { action -> this.deltaTime(action) < this.maxActionDeltaTime }
+    ]
 
     BrowserBot(config) {
         this.browser = new Browser()
+        this.maxActionDeltaTime = config.maxActionDeltaTime * this.secondsFactor
         this.browser = this.openWebTerminal()
         this.browser = this.setupLogin(config.credentials)
         this.browser = this.setupSymbolsCategories(config.symbols)
+    }
+
+    private def deltaTime(action) {
+        def actionDate = Date.from(action.time)
+        def nowDate = Date.from(Instant.now())
+        println("Now date: ${nowDate}")
+        return nowDate.time - actionDate.time
     }
 
     private def openWebTerminal() {
@@ -53,7 +67,7 @@ class BrowserBot extends Thread {
     }
 
     private def isActionValid(action) {
-      return action.action in [Action.Type.SELL, Action.Type.BUY]
+        return actionValidFunctions.every { func -> func(action) }
     }
 
     def placeOrder(action) {

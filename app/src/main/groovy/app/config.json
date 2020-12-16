@@ -10,7 +10,8 @@
     "symbols": {
       "show": ["Crypto"],
       "hide": ["Forex"]
-    }
+    },
+    "maxActionDeltaTime": 30
   },
   "investers": {
     "assets": [
