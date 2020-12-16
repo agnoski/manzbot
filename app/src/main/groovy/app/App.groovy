@@ -24,4 +24,8 @@ class App {
 
     println("Dirty job done...")
   }
+
+  def getGreeting() {
+    return "Hello!"
+  }
 }
