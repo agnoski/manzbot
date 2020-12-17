@@ -74,10 +74,10 @@ class BrowserBot extends Thread {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
                 if(isActionValid(action)) {
-                    closeWindow()
-                    newOrderButton.click()
-                    waitFor(5) { orderVolumeInput.displayed }
                     try {
+                      closeWindow()
+                      newOrderButton.click()
+                      waitFor(5) { orderVolumeInput.displayed }
                       selectOrderSymbol(action.index.code)
                       orderVolumeInput.click()
                       orderVolumeInput << (action.parameters.volumeQuantity as String)
