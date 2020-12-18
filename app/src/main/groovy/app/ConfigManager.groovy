@@ -7,7 +7,7 @@ class ConfigManager {
   private def config
   
   ConfigManager() {
-    this("/home/agno/Dev/gradleTest/app/app/src/main/groovy/app/config.json")
+    this("configs/config.json")
   }
 
   ConfigManager(path) {
