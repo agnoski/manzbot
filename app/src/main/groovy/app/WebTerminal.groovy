@@ -87,7 +87,7 @@ class WebTerminal extends Page {
 
   void login(credentials) {
     menuFile.click()
-    waitFor(5) { loginToTradeAccount.displayed }
+    waitFor(60) { loginToTradeAccount.displayed }
     loginToTradeAccount.click()
     loginToTradeAccount.click()
     println("Clicked login to trade account")
