@@ -6,7 +6,8 @@
     "version": "5",
     "credentials": {
       "user": "38236061",
-      "password": "jvmbnbc4"
+      "password": "jvmbnbc4",
+      "server": "MetaQuotes-Demo"
     },
     "symbols": {
       "show": ["Crypto"],

@@ -23,6 +23,7 @@ class WebTerminal extends Page {
     loginToTradeAccount { $("span.label", text: "Login to Trade Account") }
     loginInput { $("input#login") }
     passwordInput { $("input#password") }
+    serverInput { $("input#server") }
   }
 
   def getButton(text) {
@@ -98,6 +99,8 @@ class WebTerminal extends Page {
     loginInput.value(credentials.user)
     passwordInput.click()
     passwordInput.value(credentials.password)
+    serverInput.click()
+    serverInput.value(credentials.server)
     clickButton("OK")
     sleep(3000)
   }
