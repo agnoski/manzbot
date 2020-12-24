@@ -32,7 +32,7 @@ class BrowserBot extends Thread {
         return Browser.drive(this.browser) {
           to MetaTrader 
 
-          waitFor(20) {
+          waitFor('slow') {
             webTerminalIframe.displayed
           }
 
@@ -43,7 +43,7 @@ class BrowserBot extends Thread {
     private def setupLogin(credentials) {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
-                waitFor(30) { buyButton.displayed }
+                waitFor('slow') { buyButton.displayed }
                 login(credentials)
             }
         }
@@ -77,7 +77,7 @@ class BrowserBot extends Thread {
                     try {
                       closeWindow()
                       newOrderButton.click()
-                      waitFor(5) { orderVolumeInput.displayed }
+                      waitFor('quick') { orderVolumeInput.displayed }
                       selectOrderSymbol(action.index.code)
                       orderVolumeInput.click()
                       orderVolumeInput << (action.parameters.volumeQuantity as String)
