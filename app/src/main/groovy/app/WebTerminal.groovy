@@ -12,6 +12,8 @@ class WebTerminal extends Page {
     volumeInput { $("input#chart-one-click-volume") }
 
     symbolsButton { $("a.at-symbols-button") }
+    symbolsItems { $("div.items") }
+
     newOrderButton { $("a.at-new-order-button") }
 
     orderVolumeInput { $("input#order-ie-dialog-volume") }
@@ -82,6 +84,7 @@ class WebTerminal extends Page {
   }
 
   void clickIndexCategory(indexCategoryName) {
+    waitFor('quick') { symbolsItems.displayed }
     def indexCategory = $("span.label", text: indexCategoryName)
     indexCategory.click()
   }
