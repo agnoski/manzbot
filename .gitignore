@@ -6,4 +6,4 @@ build
 gradle
 
 # Ignore local configs directory
-configs
+app/configs
