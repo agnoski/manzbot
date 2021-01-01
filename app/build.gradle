@@ -12,6 +12,9 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+
+    // Apply the palantir.git-version plugin to add support for git tags
+    id 'com.palantir.git-version' version '0.12.3'
 }
 
 repositories {
@@ -40,3 +43,5 @@ application {
     // Define the main class for the application.
     mainClass = 'app.App'
 }
+
+version gitVersion()
