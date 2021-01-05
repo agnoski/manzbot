@@ -1,5 +1,5 @@
-# ManzBot
-A beerful bot for Manz :beer:
+# ManzBot :beer:
+A beerful bot for Manz!
 
 ## Running :running:
 `gradle run`
@@ -69,5 +69,7 @@ Example of config.json file, must be under `bin/configs/config.json` for **prod*
     ]
   }
 }
-
 ```
+
+## Drivers :carousel_horse:
+Ony Firefox browser is supported. Geckodriver can be found [here](https://github.com/mozilla/geckodriver/releases/tag/v0.28.0)
