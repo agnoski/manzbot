@@ -53,15 +53,7 @@ class BrowserBot extends Thread {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
                 toolBar.symbols.click()
-                categories.show.forEach {
-                    clickIndexCategory(it)
-                    clickButton("Show")
-                }
-                categories.hide.forEach {
-                    clickIndexCategory(it)
-                    clickButton("Hide")
-                }
-                clickButton("Close")
+                symbolsWindow.showOrHideCategories(categories)
             }
         }
     }

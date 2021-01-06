@@ -9,11 +9,10 @@ class WebTerminal extends Page {
     toolBar { module ToolBar }
 
     loginWindow { module LoginWindow }
+    symbolsWindow { module SymbolsWindow }
     orderWindow { module OrderWindow }
 
     buyButton { $("div.input-trade-button")[1] }
-
-    symbolsItems { $("div.items") }
 
     loginToTradeAccount { $("span.label", text: "Login to Trade Account") }
   }
@@ -54,12 +53,6 @@ class WebTerminal extends Page {
     else {
       println("Button $text not found")
     }
-  }
-
-  void clickIndexCategory(indexCategoryName) {
-    waitFor('quick') { symbolsItems.displayed }
-    def indexCategory = $("span.label", text: indexCategoryName)
-    indexCategory.click()
   }
 
   void login(credentials) {
