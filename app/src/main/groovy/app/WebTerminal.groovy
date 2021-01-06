@@ -5,6 +5,7 @@ import geb.module.Select
 
 class WebTerminal extends Page {
   static content = {
+    menuBar { module MenuBar }
     toolBar { module ToolBar }
 
     sellButton { $("div.input-trade-button")[0] }
@@ -20,7 +21,6 @@ class WebTerminal extends Page {
     orderSLInput { $("input#order-ie-dialog-sl") }
     orderValues { $("div.page-block div.page-block div.page-text span") }
 
-    menuFile { $("div.page-menu div.menu div.first")[0].find(text: "File") }
     loginToTradeAccount { $("span.label", text: "Login to Trade Account") }
     loginInput { $("input#login") }
     passwordInput { $("input#password") }
@@ -89,7 +89,7 @@ class WebTerminal extends Page {
   }
 
   void login(credentials) {
-    menuFile.click()
+    menuBar.file.click()
     waitFor('slow') { loginToTradeAccount.displayed }
     interact { moveToElement(loginToTradeAccount) }
     loginToTradeAccount.click()
