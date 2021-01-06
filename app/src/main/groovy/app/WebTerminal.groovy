@@ -8,6 +8,8 @@ class WebTerminal extends Page {
     menuBar { module MenuBar }
     toolBar { module ToolBar }
 
+    loginWindow { module LoginWindow }
+
     sellButton { $("div.input-trade-button")[0] }
     buyButton { $("div.input-trade-button")[1] }
     checkTermsAndConditions { $("#one-click-accept") }
@@ -22,9 +24,6 @@ class WebTerminal extends Page {
     orderValues { $("div.page-block div.page-block div.page-text span") }
 
     loginToTradeAccount { $("span.label", text: "Login to Trade Account") }
-    loginInput { $("input#login") }
-    passwordInput { $("input#password") }
-    serverInput { $("input#server") }
   }
 
   def getButton(text) {
@@ -93,15 +92,7 @@ class WebTerminal extends Page {
     waitFor('slow') { loginToTradeAccount.displayed }
     interact { moveToElement(loginToTradeAccount) }
     loginToTradeAccount.click()
-    println("Clicked login to trade account")
-    waitFor('quick') { loginInput.displayed  }
-    loginInput.click()
-    loginInput.value(credentials.user)
-    passwordInput.click()
-    passwordInput.value(credentials.password)
-    serverInput.click()
-    serverInput.value(credentials.server)
-    clickButton("OK")
+    loginWindow.login(credentials)
     sleep(3000)
   }
 
