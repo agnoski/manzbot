@@ -44,7 +44,10 @@ class BrowserBot extends Thread {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
                 waitFor('slow') { buyButton.displayed }
-                login(credentials)
+                menuBar.file.click()
+                fileMenu.clickLoginToTradeAccount()
+                loginWindow.login(credentials)
+                sleep(3000)
             }
         }
     }

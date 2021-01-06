@@ -53,11 +53,4 @@ class WebTerminal extends Page {
       println("Button $text not found")
     }
   }
-
-  void login(credentials) {
-    menuBar.file.click()
-    fileMenu.clickLoginToTradeAccount()
-    loginWindow.login(credentials)
-    sleep(3000)
-  }
 }
