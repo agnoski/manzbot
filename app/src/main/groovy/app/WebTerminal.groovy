@@ -8,13 +8,13 @@ class WebTerminal extends Page {
     menuBar { module MenuBar }
     toolBar { module ToolBar }
 
+    fileMenu { module FileMenu }
+
     loginWindow { module LoginWindow }
     symbolsWindow { module SymbolsWindow }
     orderWindow { module OrderWindow }
 
     buyButton { $("div.input-trade-button")[1] }
-
-    loginToTradeAccount { $("span.label", text: "Login to Trade Account") }
   }
 
   def getButton(text) {
@@ -56,9 +56,7 @@ class WebTerminal extends Page {
 
   void login(credentials) {
     menuBar.file.click()
-    waitFor('slow') { loginToTradeAccount.displayed }
-    interact { moveToElement(loginToTradeAccount) }
-    loginToTradeAccount.click()
+    fileMenu.clickLoginToTradeAccount()
     loginWindow.login(credentials)
     sleep(3000)
   }
