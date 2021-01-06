@@ -10,11 +10,7 @@ class WebTerminal extends Page {
 
     loginWindow { module LoginWindow }
 
-    sellButton { $("div.input-trade-button")[0] }
     buyButton { $("div.input-trade-button")[1] }
-    checkTermsAndConditions { $("#one-click-accept") }
-    acceptTermsAndConditions { $("div.page-window div.w div.b button.input-button").find { it.displayed } }
-    volumeInput { $("input#chart-one-click-volume") }
 
     symbolsItems { $("div.items") }
 
