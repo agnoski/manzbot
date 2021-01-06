@@ -52,7 +52,7 @@ class BrowserBot extends Thread {
     private def setupSymbolsCategories(categories) {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
-                symbolsButton.click()
+                toolBar.symbols.click()
                 categories.show.forEach {
                     clickIndexCategory(it)
                     clickButton("Show")
@@ -76,7 +76,7 @@ class BrowserBot extends Thread {
                 if(isActionValid(action)) {
                     try {
                       closeWindow()
-                      newOrderButton.click()
+                      toolBar.newOrder.click()
                       waitFor('quick') { orderVolumeInput.displayed }
                       selectOrderSymbol(action.index.code)
                       orderVolumeInput.click()

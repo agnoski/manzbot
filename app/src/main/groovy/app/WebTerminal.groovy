@@ -5,16 +5,15 @@ import geb.module.Select
 
 class WebTerminal extends Page {
   static content = {
+    toolBar { module ToolBar }
+
     sellButton { $("div.input-trade-button")[0] }
     buyButton { $("div.input-trade-button")[1] }
     checkTermsAndConditions { $("#one-click-accept") }
     acceptTermsAndConditions { $("div.page-window div.w div.b button.input-button").find { it.displayed } }
     volumeInput { $("input#chart-one-click-volume") }
 
-    symbolsButton { $("a.at-symbols-button") }
     symbolsItems { $("div.items") }
-
-    newOrderButton { $("a.at-new-order-button") }
 
     orderVolumeInput { $("input#order-ie-dialog-volume") }
     orderTPInput { $("input#order-ie-dialog-tp") }
