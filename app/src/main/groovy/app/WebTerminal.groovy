@@ -9,15 +9,11 @@ class WebTerminal extends Page {
     toolBar { module ToolBar }
 
     loginWindow { module LoginWindow }
+    orderWindow { module OrderWindow }
 
     buyButton { $("div.input-trade-button")[1] }
 
     symbolsItems { $("div.items") }
-
-    orderVolumeInput { $("input#order-ie-dialog-volume") }
-    orderTPInput { $("input#order-ie-dialog-tp") }
-    orderSLInput { $("input#order-ie-dialog-sl") }
-    orderValues { $("div.page-block div.page-block div.page-text span") }
 
     loginToTradeAccount { $("span.label", text: "Login to Trade Account") }
   }
@@ -59,23 +55,6 @@ class WebTerminal extends Page {
       println("Button $text not found")
     }
   }
-  
-  void selectOrderSymbol(index) {
-    def orderSymbolSelect = $("#order-dialog-symbol").module(Select)
-    orderSymbolSelect.selected = index
-  }
-
-  def getBuyPriceTP(delta) {
-    def price = getBuyPrice() as BigDecimal
-    println("Buy price: $price")
-    return price + delta
-  }
-
-  def getSellPriceTP(delta) {
-    def price = getSellPrice() as BigDecimal
-    println("Sell price: $price")
-    return price - delta
-  }
 
   void clickIndexCategory(indexCategoryName) {
     waitFor('quick') { symbolsItems.displayed }
@@ -90,24 +69,5 @@ class WebTerminal extends Page {
     loginToTradeAccount.click()
     loginWindow.login(credentials)
     sleep(3000)
-  }
-
-  private def getBuyPrice() {
-    return this.getPrices()[1]
-  }
-
-  private def getSellPrice() {
-    return this.getPrices()[0]
-  }
-
-  private getPrices() {
-    def text = orderValues.inject("") { acc, val ->
-      acc + val.text()
-    }
-    println("Text: $text")
-
-    def prices = text.split(" / ")
-    println("Prices: $prices")
-    return prices
   }
 }

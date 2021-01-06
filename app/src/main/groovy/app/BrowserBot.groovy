@@ -77,26 +77,7 @@ class BrowserBot extends Thread {
                     try {
                       closeWindow()
                       toolBar.newOrder.click()
-                      waitFor('quick') { orderVolumeInput.displayed }
-                      selectOrderSymbol(action.index.code)
-                      orderVolumeInput.click()
-                      orderVolumeInput << (action.parameters.volumeQuantity as String)
-                      switch(action.action) {
-                        case Action.Type.BUY:
-                          def priceTP = getBuyPriceTP(action.parameters.tpDelta) as String
-                          orderTPInput.click()
-                          orderTPInput << priceTP
-                          clickButton("Buy")
-                          break
-                        case Action.Type.SELL:
-                          def priceTP = getSellPriceTP(action.parameters.tpDelta) as String
-                          orderTPInput.click()
-                          orderTPInput << priceTP
-                          clickButton("Sell")
-                          break
-                        default:
-                          println("Action ${action.action}: nothing to do")
-                      }
+                      orderWindow.placeOrder(action)
                       def time = Instant.now()
                       def okButton = getButton("OK")
                       if(okButton) {
