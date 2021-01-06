@@ -49,8 +49,7 @@ class WebTerminal extends Page {
     def button = getButton(text)
     if(button) {
       button.click()
-    }
-    else {
+    } else {
       println("Button $text not found")
     }
   }

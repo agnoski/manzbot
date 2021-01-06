@@ -70,10 +70,10 @@ class BrowserBot extends Thread {
                       closeWindow()
                       toolBar.newOrder.click()
                       orderWindow.placeOrder(action)
-                      def time = Instant.now()
                       def okButton = getButton("OK")
                       if(okButton) {
                         okButton.click()
+                        def time = Instant.now()
                         println("Well done: $time")
                       } else {
                         println("Something has changed")
