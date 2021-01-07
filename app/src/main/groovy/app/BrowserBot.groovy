@@ -17,6 +17,7 @@ class BrowserBot extends Thread {
         this.browser = new Browser()
         this.maxActionDeltaTime = config.maxActionDeltaTime * this.secondsFactor
         this.browser = this.openWebTerminal()
+        this.browser = this.selectMetaTraderPlatform(config.version)
         this.browser = this.setupLogin(config.credentials)
         this.browser = this.setupSymbolsCategories(config.symbols)
     }
@@ -37,6 +38,18 @@ class BrowserBot extends Thread {
           }
 
           closeCookiesBannerIfPresent()
+        }
+    }
+
+    private def selectMetaTraderPlatform(version) {
+        return Browser.drive(this.browser) {
+            withFrame(webTerminalIframe) {
+                waitFor('slow') { buyButton.displayed }
+                menuBar.file.click()
+                fileMenu.clickMetaTraderPlatform(version)
+                waitFor('slow') { buyButton.displayed }
+                sleep(3000)
+            }
         }
     }
 
