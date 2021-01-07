@@ -1,12 +1,9 @@
 package app
 
-import geb.Module
 import geb.module.Select
 
-class OrderWindow extends Module {
+class OrderWindow extends BaseWindow {
   static content = {
-    button { text -> $("button.input-button", text: text).find { it.displayed } }
-
     orderSymbolSelect { $("#order-dialog-symbol").module(Select) }
     
     orderVolumeInput { $("input#order-ie-dialog-volume") }

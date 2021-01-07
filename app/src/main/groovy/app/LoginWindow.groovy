@@ -1,11 +1,7 @@
 package app
 
-import geb.Module
-
-class LoginWindow extends Module {
+class LoginWindow extends BaseWindow {
   static content = {
-    button { text -> $("button.input-button", text: text).find { it.displayed } }
-
     loginInput { $("input#login") }
     passwordInput { $("input#password") }
     serverInput { $("input#server") }

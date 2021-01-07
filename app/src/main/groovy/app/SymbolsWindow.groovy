@@ -1,11 +1,7 @@
 package app
 
-import geb.Module
-
-class SymbolsWindow extends Module {
+class SymbolsWindow extends BaseWindow {
   static content = {
-    button { text -> $("button.input-button", text: text).find { it.displayed } }
-
     symbolsItems { $("div.items") }
     indexCategory { text -> $("span.label", text: text) }
   }
