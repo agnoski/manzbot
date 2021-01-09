@@ -46,8 +46,11 @@ class BrowserBot extends Thread {
             withFrame(webTerminalIframe) {
                 waitFor('slow') { buyButton.displayed }
                 menuBar.file.click()
-                fileMenu.clickMetaTraderPlatform(version)
-                waitFor('slow') { buyButton.displayed }
+                if(!fileMenu.clickMetaTraderPlatform(version)) {
+                  waitFor('slow') { loader.displayed }
+                  waitFor('slow') { !loader.displayed }
+                  waitFor('slow') { buyButton.displayed }
+                }
                 sleep(3000)
             }
         }

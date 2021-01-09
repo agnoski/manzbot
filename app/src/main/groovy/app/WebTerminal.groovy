@@ -15,6 +15,7 @@ class WebTerminal extends Page {
     orderWindow { module OrderWindow }
 
     buyButton { $("div.input-trade-button")[1] }
+    loader { $("div.loader") }
   }
 
   def getButton(text) {
