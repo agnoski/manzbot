@@ -3,14 +3,16 @@ package app
 import geb.module.Select
 
 class OrderWindow extends BaseWindow {
+  String version
+
   static content = {
-    orderSymbolSelect { $("#order-dialog-symbol").module(Select) }
+    orderSymbolSelect { version == "4" ? $("#symbol").module(Select) : $("#order-dialog-symbol").module(Select) }
     
-    orderVolumeInput { $("input#order-ie-dialog-volume") }
-    orderTPInput { $("input#order-ie-dialog-tp") }
-    orderSLInput { $("input#order-ie-dialog-sl") }
+    orderVolumeInput { version == "4" ? $("input#volume") : $("input#order-ie-dialog-volume") }
+    orderTPInput { version == "4" ? $("input#tp") : $("input#order-ie-dialog-tp") }
+    orderSLInput { version == "4" ? $("input#sl") : $("input#order-ie-dialog-sl") }
     
-    orderValues { $("div.page-block div.page-block div.page-text span") }
+    orderValues { version == "4" ? $("div.w div.b div.page-text span") : $("div.page-block div.page-block div.page-text span") }
   }
 
   void placeOrder(action) {

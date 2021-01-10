@@ -6,13 +6,13 @@ import geb.module.Select
 class WebTerminal extends Page {
   static content = {
     menuBar { module MenuBar }
-    toolBar { module ToolBar }
+    toolBar { version -> module(new ToolBar(version: version)) }
 
     fileMenu { module FileMenu }
 
     loginWindow { module LoginWindow }
     symbolsWindow { module SymbolsWindow }
-    orderWindow { module OrderWindow }
+    orderWindow { version -> module(new OrderWindow(version: version)) }
 
     buyButton { $("div.input-trade-button")[1] }
     loader { $("div.loader") }

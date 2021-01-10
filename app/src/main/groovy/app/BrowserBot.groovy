@@ -6,6 +6,7 @@ import java.time.Instant
 
 class BrowserBot extends Thread {
     private def secondsFactor = 1000
+    private def version
     private def browser
     private def maxActionDeltaTime
     private def actionValidFunctions = [
@@ -16,8 +17,9 @@ class BrowserBot extends Thread {
     BrowserBot(config) {
         this.browser = new Browser()
         this.maxActionDeltaTime = config.maxActionDeltaTime * this.secondsFactor
+        this.version = config.version
         this.browser = this.openWebTerminal()
-        this.browser = this.selectMetaTraderPlatform(config.version)
+        this.browser = this.selectMetaTraderPlatform()
         this.browser = this.setupLogin(config.credentials)
         this.browser = this.setupSymbolsCategories(config.symbols)
     }
@@ -31,7 +33,7 @@ class BrowserBot extends Thread {
 
     private def openWebTerminal() {
         return Browser.drive(this.browser) {
-          to MetaTrader 
+          to MetaTrader
 
           waitFor('slow') {
             webTerminalIframe.displayed
@@ -41,12 +43,12 @@ class BrowserBot extends Thread {
         }
     }
 
-    private def selectMetaTraderPlatform(version) {
+    private def selectMetaTraderPlatform() {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
                 waitFor('slow') { buyButton.displayed }
                 menuBar.file.click()
-                if(!fileMenu.clickMetaTraderPlatform(version)) {
+                if(!fileMenu.clickMetaTraderPlatform(this.version)) {
                   waitFor('slow') { loader.displayed }
                   waitFor('slow') { !loader.displayed }
                   waitFor('slow') { buyButton.displayed }
@@ -71,7 +73,8 @@ class BrowserBot extends Thread {
     private def setupSymbolsCategories(categories) {
         return Browser.drive(this.browser) {
             withFrame(webTerminalIframe) {
-                toolBar.symbols.click()
+                toolBar(this.version).symbols.click()
+                sleep(3000)
                 symbolsWindow.showOrHideCategories(categories)
             }
         }
@@ -87,8 +90,8 @@ class BrowserBot extends Thread {
                 if(isActionValid(action)) {
                     try {
                       closeWindow()
-                      toolBar.newOrder.click()
-                      orderWindow.placeOrder(action)
+                      toolBar(this.version).newOrder.click()
+                      orderWindow(this.version).placeOrder(action)
                       def okButton = getButton("OK")
                       if(okButton) {
                         okButton.click()
@@ -99,7 +102,7 @@ class BrowserBot extends Thread {
                         closeWindow()
                       }
                     } catch(Exception e) {
-                        println("Something went terribly wrong, closing the order window")
+                        println("Something went terribly wrong: $e, closing the order window")
                         closeWindow()
                     } finally {
                         println("Finally")
