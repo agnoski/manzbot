@@ -13,7 +13,6 @@ class MetaTrader extends Page {
     closeCookiesBanner { $("div#floatVerticalPanel span.float-vertical-panel__cross") }
   }
 
-
   void closeCookiesBannerIfPresent() {
     if(cookiesBanner.displayed) { 
       closeCookiesBanner.click()
