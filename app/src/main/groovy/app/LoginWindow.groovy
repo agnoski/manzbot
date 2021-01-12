@@ -14,15 +14,15 @@ class LoginWindow extends BaseWindow {
       serverInput.displayed
     }
 
-    loginInput.click()
-    loginInput.value(credentials.user)
-
-    passwordInput.click()
-    passwordInput.value(credentials.password)
-
-    serverInput.click()
-    serverInput.value(credentials.server)
+    this.setInputValue(loginInput, credentials.user)
+    this.setInputValue(passwordInput, credentials.password)
+    this.setInputValue(serverInput, credentials.server)
 
     button("OK").click()
+  }
+
+  private void setInputValue(input, value) {
+    input.click()
+    input.value(value)
   }
 }
