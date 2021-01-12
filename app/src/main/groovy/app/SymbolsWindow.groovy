@@ -9,16 +9,16 @@ class SymbolsWindow extends BaseWindow {
   void showOrHideCategories(categories) {
     waitFor('quick') { symbolsItems.displayed }
 
-    categories.show.forEach {
-      indexCategory(it).click()
-      button("Show").click()
-    }
-
-    categories.hide.forEach {
-      indexCategory(it).click()
-      button("Hide").click()
-    }
+    this.performAction(categories.show, "Show")
+    this.performAction(categories.hide, "Hide")
 
     button("Close").click()
+  }
+
+  private void performAction(categories, action) {
+    categories.forEach {
+      indexCategory(it).click()
+      button(action).click()
+    }
   }
 }
