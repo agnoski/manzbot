@@ -34,11 +34,7 @@ class BrowserBot extends Thread {
     private def openWebTerminal() {
         return Browser.drive(this.browser) {
           to MetaTrader
-
-          waitFor('slow') {
-            webTerminalIframe.displayed
-          }
-
+          waitFor('slow') { webTerminalIframe.displayed }
           closeCookiesBannerIfPresent()
         }
     }
