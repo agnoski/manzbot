@@ -88,6 +88,7 @@ class BrowserBot extends Thread {
                       closeWindow()
                       toolBar(this.version).newOrder.click()
                       orderWindow(this.version).placeOrder(action)
+                      sleep(5000)
                       def okButton = getButton("OK")
                       if(okButton) {
                         okButton.click()
