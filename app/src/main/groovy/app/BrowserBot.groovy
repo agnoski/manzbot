@@ -91,6 +91,7 @@ class BrowserBot extends Thread {
                       sleep(5000)
                       def okButton = getButton("OK")
                       if(okButton) {
+                        orderWindow(this.version).showOrderInfo()
                         okButton.click()
                         def time = Instant.now()
                         println("Well done: $time")

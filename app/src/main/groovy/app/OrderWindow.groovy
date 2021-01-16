@@ -13,6 +13,16 @@ class OrderWindow extends BaseWindow {
     orderSLInput { version == "4" ? $("input#sl") : $("input#order-ie-dialog-sl") }
     
     orderValues { version == "4" ? $("div.w div.b div.page-text span") : $("div.page-block div.page-block div.page-text span") }
+    orderInfo { version == "4" ? $("div.w div.b div.page-text", text: ~/.+/) : $("div.page-block div.page-block div.page-text", text: ~/.+/) }
+  }
+
+  void showOrderInfo() {
+    if(orderInfo) {
+      println("Order info (${orderInfo.size()}):")
+      orderInfo.each {
+        println("\t${it.text()}")
+      }
+    }
   }
 
   void placeOrder(action) {
