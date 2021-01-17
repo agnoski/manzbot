@@ -1,9 +1,11 @@
 package app
 
+import groovy.util.logging.Log
 import geb.Browser
 import org.openqa.selenium.Keys
 import java.time.Instant
 
+@Log
 class BrowserBot extends Thread {
     private def secondsFactor = 1000
     private def version
@@ -27,7 +29,6 @@ class BrowserBot extends Thread {
     private def deltaTime(action) {
         def actionDate = Date.from(action.time)
         def nowDate = Date.from(Instant.now())
-        println("Now date: ${nowDate}")
         return nowDate.time - actionDate.time
     }
 
@@ -93,17 +94,16 @@ class BrowserBot extends Thread {
                       if(okButton) {
                         orderWindow(this.version).showOrderInfo()
                         okButton.click()
-                        def time = Instant.now()
-                        println("Well done: $time")
+                        log.info("Probably well done!")
                       } else {
-                        println("Something has changed")
+                        log.warning("Something has changed")
                         closeWindow()
                       }
                     } catch(Exception e) {
-                        println("Something went terribly wrong: $e, closing the order window")
+                        log.severe("Something went terribly wrong: $e, closing order window")
                         closeWindow()
                     } finally {
-                        println("Finally")
+                        log.info("Finally, if order window still open, close it")
                         closeWindow()
                     }
                 }
@@ -114,9 +114,9 @@ class BrowserBot extends Thread {
     @Override
     void run() {
         while(true) {
-            println("Ready to get an action")
+            log.info("Ready to get an action")
             def action = ActionsService.getInstance().take()
-            println("Got an action ${Instant.now()}, placing the order")
+            log.info("Got an action, placing the order")
             this.browser = placeOrder(action)
         }
     }

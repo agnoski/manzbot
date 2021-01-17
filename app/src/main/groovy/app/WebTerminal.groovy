@@ -1,8 +1,10 @@
 package app
 
+import groovy.util.logging.Log
 import geb.Page
 import geb.module.Select
 
+@Log
 class WebTerminal extends Page {
   static content = {
     menuBar { module MenuBar }
@@ -40,9 +42,9 @@ class WebTerminal extends Page {
     def windowCloseButton = getWindowCloseButton()
     if(windowCloseButton) {
       windowCloseButton.click()
-      println("Tried to close window")
+      log.info("Tried to close window")
     } else {
-      println("No widows to close")
+      log.info("No widows to close")
     }
   }
 
@@ -51,7 +53,7 @@ class WebTerminal extends Page {
     if(button) {
       button.click()
     } else {
-      println("Button $text not found")
+      log.severe("Button $text not found")
     }
   }
 }

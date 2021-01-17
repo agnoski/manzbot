@@ -1,8 +1,10 @@
 package app
 
+import groovy.util.logging.Log
 import groovy.json.JsonSlurper
 import java.time.Instant
 
+@Log
 class Invester implements Runnable {
   private final def urlTemplate = 'https://ssltsw.forexprostools.com/api.php?action=refresher&pairs=${code}&timeframe=${timeFrame}'
 
@@ -29,9 +31,8 @@ class Invester implements Runnable {
       parameters: this.parameters,
       time: Instant.now()
     ]
-    println("Action: $action")
+    log.info("Action: $action")
     ActionsService.getInstance().put(action)
-    println("Added action in the queue")
   }
 
   private def doRequest() {

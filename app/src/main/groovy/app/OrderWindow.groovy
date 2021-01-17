@@ -1,7 +1,9 @@
 package app
 
+import groovy.util.logging.Log
 import geb.module.Select
 
+@Log
 class OrderWindow extends BaseWindow {
   String version
 
@@ -18,9 +20,9 @@ class OrderWindow extends BaseWindow {
 
   void showOrderInfo() {
     if(orderInfo) {
-      println("Order info (${orderInfo.size()}):")
+      log.info("Order info (${orderInfo.size()}):")
       orderInfo.each {
-        println("\t${it.text()}")
+        log.info("--> ${it.text()}")
       }
     }
   }
@@ -49,7 +51,7 @@ class OrderWindow extends BaseWindow {
         button("Sell").click()
         break
       default:
-        println("Action ${action.action}: nothing to do")
+        log.warning("Unexpected action ${action.action}: nothing to do")
     }
   }
 
@@ -59,14 +61,16 @@ class OrderWindow extends BaseWindow {
 
   private def getBuyPriceTP(delta) {
     def price = this.getBuyPrice() as BigDecimal
-    println("Buy price: $price")
-    return price + delta
+    def tpPrice = price + delta
+    log.info("Buy price: $price -> TP price: ${tpPrice}")
+    return tpPrice
   }
 
   private def getSellPriceTP(delta) {
     def price = this.getSellPrice() as BigDecimal
-    println("Sell price: $price")
-    return price - delta
+    def tpPrice = price - delta
+    log.info("Sell price: $price -> TP price: ${tpPrice}")
+    return tpPrice
   }
 
   private def getBuyPrice() {
@@ -81,10 +85,8 @@ class OrderWindow extends BaseWindow {
     def text = orderValues.inject("") { acc, val ->
       acc + val.text()
     }
-    println("Text: $text")
 
     def prices = text.split(" / ")
-    println("Prices: $prices")
     return prices
   }
 }
